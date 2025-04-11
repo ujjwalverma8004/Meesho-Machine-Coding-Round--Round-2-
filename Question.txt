@@ -1,0 +1,37 @@
+Vending machine: Registration and Purchase Flow
+Problem Description
+
+Design a vending machine that allows users to view available items, register new items, select an item, Insert money, and complete a basic purchase. The system should handle inventory and return appropriate change.
+
+Core Functionalities
+
+VIEW ITEMS-Display available items with code, name, price, and quantity.
+
+-REGISTER ITEM <name> <price> <Initial_quantity> - Add a new item to inventory.
+
+-SELECT_ITEM <item_code> - Choose an item to purchase.
+
+-INSERT MONEY <amount> - Insert money towards selected item.
+
+
+Sample Test Case
+
+Input: VIEW_ITEMS
+
+Output: No items available
+
+Input: REGISTER_ITEM Cola 35 5
+
+Output: Item added successfully, item_code: 1
+
+Input: SELECT_ITEM 1
+
+Output: You selected: Cola (235)
+
+• Input: INSERT_MONEY 20
+
+Output: Payment received: 20. Remaining amount: 15
+
+Input: INSERT_MONEY 20
+
+Output: Payment received: ₹20. Dispensing Cola. Returning change: ₹5
