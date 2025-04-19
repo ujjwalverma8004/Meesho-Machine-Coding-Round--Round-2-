@@ -1,0 +1,56 @@
+1st column is Order ID
+2nd is location
+3rd is events , like vehicle arrive , package unload , quality check , in transit , real time location 
+4th is time stamp when these events is ended (date time)
+
+
+global average time taken for all the actions 
+vehicle arrive = 48 hours 
+package unload = 5 hours, etc
+
+
+
+STep 1 
+
+lets take 
+event_duration 
+order_id
+event
+end_timestamp
+
+WITH event_duration AS(
+	SELECT 
+		order_id,
+		event,
+		end_timestamp,
+
+//GEt previous event time stamp 
+	LAG(end_timestamp) OVER (
+		PARTITION BY order_id
+		ORDER BY end_timestamp
+		) AS prev_timestamp 
+	
+	FROM logistics_events // main table 
+),
+
+duration_diff AS(
+	SELECT
+		event, 
+		TIMESTAMDIFF(SECOND ,
+		prev_timestamp, end_timestamp) AS
+		duration_in_seconds
+
+	FROM event_duration 
+	WHERE prev_timestamp IS NOT NULL
+)
+
+SELECT
+	event,
+
+SEC_TO_TIME(AVG(duration_in_seconds))
+AS average_duration 
+
+FROM duration_diff
+GROUP BY event
+
+
